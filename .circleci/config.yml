@@ -148,7 +148,50 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      - destroy-environment       
+      - destroy-environment    
+
+  configure-infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # Your code here
+            yum install -y gcc libffi-devel python3 epel-release && \
+            yum install -y python3-pip && \
+            yum install -y wget && \
+            yum clean all && \
+            yum update -y && \
+            yum install -y tar gzip curl unzip openssh-server openssh-clients && \
+            python3 -m pip install ansible
+      # Add ssh keys with fingerprint
+      - add_ssh_keys:
+           fingerprints: ["69:34:0e:b2:d6:73:e2:89:87:f7:05:9f:93:06:95:2e"]
+      # attach workspace
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Configure server
+          command: |
+            # Your code here
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
+      - run:
+          name: node_exporter
+          command: |
+            # Your code here
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt node-exporter.yml
+      # - slack/notify:
+      #     branch_pattern: master
+      #     channel: C04CPS646NP
+      #     event: fail
+      #     template: basic_fail_1
+      # Here's where you will add some code to rollback on failure 
+      - remove-bucket-contents
+      - destroy-environment        
           
              
           
