@@ -191,7 +191,6 @@ jobs:
             cd backend
             # Run and save the migration output
             npm install --no-audit --no-fund
-            dockerize -wait tcp://localhost:5432 -timeout 1m
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to memstash
