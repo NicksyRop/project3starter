@@ -178,19 +178,32 @@ jobs:
             # Your code here
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
-      # - run:
-      #     name: node_exporter
-      #     command: |
-      #       # Your code here
-      #       cd .circleci/ansible
-      #       ansible-playbook -i inventory.txt node-exporter.yml
-      # - slack/notify:
-      #     branch_pattern: master
-      #     channel: C04CPS646NP
-      #     event: fail
-      #     template: basic_fail_1
-      # Here's where you will add some code to rollback on failure 
-           
+  run-migrations:
+    docker:
+      # Docker image here that supports NodeJS
+      - image: circleci/node:13.8.0
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Run migrations
+          command: |
+            cd backend
+            # Run and save the migration output
+            npm install --no-audit --no-fund
+            npm run migrations > migrations_dump.txt
+      - run:
+          name: Send migration results to memstash
+          command: |
+            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+            then
+        
+                # If you are using kvdb.io, generate the bucket ID "PXmf3bWKs4YgtaFALNwLGb" in your local terminal first
+                curl https://kvdb.io/PXmf3bWKs4YgtaFALNwLGb/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+            fi
+
+     # Here's where you will add some code to rollback on failure   
+      - revert-migrations     
           
              
           
@@ -215,3 +228,6 @@ workflows:
               only: [master]         
       - configure-infrastructure:
           requires: [deploy-infrastructure]
+
+      - run-migrations:
+          requires: [configure-infrastructure]    
