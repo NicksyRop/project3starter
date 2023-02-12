@@ -294,33 +294,32 @@ jobs:
       - checkout
       # Add ssh keys with fingerprint
       - add_ssh_keys:
-           fingerprints: ["69:34:0e:b2:d6:73:e2:89:87:f7:05:9f:93:06:95:2e"]
+           fingerprints: ["6c:f8:3d:35:4b:aa:19:6a:94:22:b8:52:e1:75:9d:23"]
+      # attach workspace
       - run:
           name: Install dependencies
           command: |
-            # your code here
             apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
       - restore_cache:
           keys: [backend-build]
       # attach workspace
       - attach_workspace:
-          at: ~/      
-      - run:
+          at: ~/
+      - run: 
           name: Deploy backend
           command: |
-            # your code here
-            cd backend
-            npm i
-            npm run build 
-            cd ..
-            # Zip the directory
-            tar -C backend -czvf artifact.tar.gz .
-            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
-            cd .circleci/ansible
-            echo "Contents  of the inventory.txt file is -------"
-            cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
+             cd backend
+             npm i
+             npm run build 
+             cd ..
+             # Zip the directory
+             tar -C backend -czvf artifact.tar.gz .
+             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+             mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
+             cd .circleci/ansible
+             echo "Contents  of the inventory.txt file is -------"
+             cat inventory.txt
+             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure
       - remove-bucket-contents
       - destroy-environment
