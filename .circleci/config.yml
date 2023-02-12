@@ -12,9 +12,7 @@ commands:
           name: Install Ansible
           command: |
             sudo apt update
-            sudo apt install software-properties-common -y
-            sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible -y
+            sudo apt install ansible
 
   install_awscli:
     description: Install AWS cli
@@ -33,8 +31,7 @@ commands:
           name: Install Node.js 14
           command: |
            
-
-            sudo apt-get install curl
+            sudo apt-get update
             curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash - &&\
             sudo apt install -y nodejs
             echo "node is being installed"
@@ -332,7 +329,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - install_nodejs
-      - install_awscli
+      - aws-cli/setup
       - install_ansible
       - run:
           name: Deploy backend
@@ -358,30 +355,30 @@ jobs:
 workflows:
   default:
     jobs:
-      # - build-frontend
-      # - build-backend
-      # - test-frontend:
-      #     requires : [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]   
-      # - scan-frontend:
-      #     requires: [build-frontend]   
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires : [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]   
+      - scan-frontend:
+          requires: [build-frontend]   
 
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [master]         
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]         
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
 
-      # - run-migrations:
-      #     requires: [configure-infrastructure]    
+      - run-migrations:
+          requires: [configure-infrastructure]    
 
-      # - deploy-frontend:
-      #     requires: [run-migrations]    
+      - deploy-frontend:
+          requires: [run-migrations]    
 
       - deploy-backend
-          # requires: [run-migrations]    
+          requires: [run-migrations]    
