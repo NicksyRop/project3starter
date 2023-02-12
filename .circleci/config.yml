@@ -324,7 +324,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: 
-            - "a4:9d:96:eb:ac:e1:aa:05:fb:97:f2:1d:e8:2c:0e:9c"
+            - "69:34:0e:b2:d6:73:e2:89:87:f7:05:9f:93:06:95:2e"
       - attach_workspace:
           at: ~/
       - install_nodejs
