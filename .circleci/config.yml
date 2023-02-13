@@ -182,14 +182,15 @@ jobs:
 
   deploy-infrastructure:
     docker:
-       - image: amazon/aws-cli
+      # Docker image here that supports AWS CLI
+      - image: amazon/aws-cli
     steps:
+      # Checkout code from git
       - checkout
       - run:
           name: Install tar utility
           command: |
             yum install -y tar gzip
-      
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -217,7 +218,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      - destroy-environment    
+      # - destroy-environment    
 
   configure-infrastructure:
     docker:
