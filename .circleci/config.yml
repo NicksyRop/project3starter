@@ -427,7 +427,10 @@ jobs:
               else
                 exit 1
               fi
-       
+
+      - revert-migrations
+      # - remove-bucket-contents
+      - destroy-environment 
              
           
 workflows:
