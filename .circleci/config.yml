@@ -330,7 +330,7 @@ jobs:
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints:
-            - "69:34:0e:b2:d6:73:e2:89:87:f7:05:9f:93:06:95:2e"
+            - "8e:59:84:d8:f7:92:7e:a1:b3:90:d8:3c:db:a9:dd:a0"
       # attach workspace
       - attach_workspace:
           at: ~/
@@ -404,15 +404,15 @@ jobs:
           name: Frontend smoke test.
           command: |
             # your code here
-            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
-            echo ${URL} 
-            if curl -s ${URL} | grep "welcome"
-            then
-                # Change this to 0 after the job fails
-              return 0
-            else
-              return 1
-            fi                
+              URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
+              echo ${URL} 
+              if curl -s ${URL} | grep "Welcome"
+              then
+                  # Change this to 0 after the job fails
+                return 1
+              else
+                return 1
+              fi       
       - run:
           name: Backend smoke test.
           command: |
