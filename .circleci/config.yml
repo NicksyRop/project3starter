@@ -270,8 +270,8 @@ jobs:
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
         
-                # If you are using kvdb.io, generate the bucket ID "7LNEUe7zSSEEvpe9u6uDkR" in your local terminal first
-                curl https://kvdb.io/7LNEUe7zSSEEvpe9u6uDkR/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+                # If you are using kvdb.io, generate the bucket ID "Lt1zssiUX7er9gcHmHjyQo" in your local terminal first
+                curl https://kvdb.io/Lt1zssiUX7er9gcHmHjyQo/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
 
      # Here's where you will add some code to rollback on failure  
