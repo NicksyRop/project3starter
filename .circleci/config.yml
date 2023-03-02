@@ -306,13 +306,14 @@ jobs:
           command: |
             # your code here
             export BACKEND_IP=$(aws ec2 describe-instances \
+            --query "Reservations[*].Instances[*].[PublicIpAddress]" \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --query "Reservations[*].Instances[*].PublicIpAddress" \
             --output text)
             export API_URL="http://${BACKEND_IP}:3030"
-            echo "${API_URL}"
-            echo "API_URL = ${API_URL}"
-            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            echo "API_URL=${API_URL}"
+            # reddirect API url to .env file 
+            echo API_URL="http://${BACKEND_IP}:3030" > frontend/.env
+            # print to stdout
             cat frontend/.env
       - run:
           name: Deploy frontend objects
@@ -344,39 +345,39 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # your code here
-            apk add --update --no-cache ansible tar gzip nodejs npm curl aws-cli 
+            apk add --update --no-cache ansible
+            apk add --update --no-cache tar gzip
+            apk add --update --no-cache nodejs npm
+            apk add --update --no-cache aws-cli curl
       - run:
           name: Deploy backend
           command: |
-            # your code here
-            pwd
             cd backend
-            
+              
+              # set up environment variables for backend connections
             touch .env
             echo ENVIRONMENT=production > ".env"
             echo TYPEORM_CONNECTION=postgres >> ".env"
-            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> ".env"
             echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> ".env"
             echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> ".env"
-            echo NODE_ENV=production > ".env"
+            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> ".env"
+            echo NODE_ENV=production >> ".env"
             echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
             echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
-            
-            pwd
-            ls -al
             npm install
             npm run build
             cd ..
             pwd
-            ls -al
-            # Zip the directory
+            ls -a
+            # zip the backend directory
             tar -C backend -czvf artifact.tar.gz .
-            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+            # create directory in deploy roles && move zip artifact to deploy/role for ansible
+            mkdir .circleci/ansible/roles/deploy/files/
             mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
+            # navigate to ansible & display content of inventory
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
