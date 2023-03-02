@@ -30,9 +30,9 @@
         state: present
   
   - name: "Unarchive backend files"
-  unarchive:
-    src: artifact.tar.gz
-    dest: ~/backend-app
+    unarchive:
+      src: artifact.tar.gz
+      dest: ~/backend-app
 
   - name: "Start Backend App"
     become: true
