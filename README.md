@@ -30,4 +30,7 @@ In this project,i prove prove my mastery of the following learning objectives:
 ### License
 [License](LICENSE.md)
 
+### Screenshots
+## Destroy environment on fail
+![image](https://user-images.githubusercontent.com/86717383/233173976-a52b7e78-b0bf-4cda-b61f-fbb69449a9f9.png)
 
