@@ -53,6 +53,8 @@ In this project,i prove prove my mastery of the following learning objectives:
 ### Monitoring - prometheus
 ![image](https://user-images.githubusercontent.com/86717383/233175322-0237534e-49b0-4e0f-921a-6bbc69d038bc.png)
 ![image](https://user-images.githubusercontent.com/86717383/233175486-f52debb4-1843-4d87-b3b2-dd34de227556.png)
+### Circleci pipepline
+![image](https://user-images.githubusercontent.com/86717383/233178094-e8066015-baf8-444a-b1ce-758cf73a08b8.png)
 
 
 
