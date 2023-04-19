@@ -43,6 +43,9 @@ In this project,i prove prove my mastery of the following learning objectives:
 ![image](https://user-images.githubusercontent.com/86717383/233173976-a52b7e78-b0bf-4cda-b61f-fbb69449a9f9.png)
 ### Smoke test
 ![image](https://user-images.githubusercontent.com/86717383/233174240-4d75d48b-a197-45e0-817a-710248feb60f.png)
+### Update cloudfront
+![image](https://user-images.githubusercontent.com/86717383/233177332-d85c198e-41f9-4a95-9ea2-7b1e77f3216c.png)
+
 ### Alerts - email 
 ![image](https://user-images.githubusercontent.com/86717383/233174652-ab7a4832-6338-4171-ae51-373f7639ebd3.png)
 
