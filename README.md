@@ -31,6 +31,14 @@ In this project,i prove prove my mastery of the following learning objectives:
 [License](LICENSE.md)
 
 ## Screenshots
+### Application up and running
+![image](https://user-images.githubusercontent.com/86717383/233176329-de0e4e05-8de6-40cc-a2ee-c60d7cc60f65.png)
+
+### Back-end Build
+![image](https://user-images.githubusercontent.com/86717383/233175818-b0f47312-ffa8-4995-9566-8e06ae7fb043.png)
+### Front-end Test
+![image](https://user-images.githubusercontent.com/86717383/233175996-d4136e16-9c4f-48c6-90ea-c8a5e29d2c3c.png)
+
 ### Destroy environment on fail
 ![image](https://user-images.githubusercontent.com/86717383/233173976-a52b7e78-b0bf-4cda-b61f-fbb69449a9f9.png)
 ### Smoke test
